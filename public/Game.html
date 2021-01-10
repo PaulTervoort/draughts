@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>Draughts</title>
+    <link rel="icon" href="Images/Icon.png">
+    <link rel="stylesheet" href="Fonts/Pac_Font/Pac_Font.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="Stylesheets/style.css">
+    <link rel="stylesheet" href="Stylesheets/game.css">
+  </head>
+
+  <body>
+    <main>
+      <section class="Board">
+        <div class="BoardSpace">
+          <div id="Allies">
+            <div id="a0">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a1">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a2">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a3">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a4">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a5">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a6">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a7">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a8">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a9">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a10">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a11">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a12">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a13">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a14">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a15">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a16">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a17">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a18">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+            <div id="a19">
+              <img src="Images/PacMan_Yellow.png">
+            </div>
+          </div>
+
+          <div id="Opponents">
+            <div id="o0">
+              <img src="Images/Spooky_Blue.png">
+            </div>
+            <div id="o1">
+              <img src="Images/Spooky_Blue.png">
+            </div>
+            <div id="o2">
+              <img src="Images/Spooky_Blue.png">
+            </div>
+            <div id="o3">
+              <img src="Images/Spooky_Blue.png">
+            </div>
+            <div id="o4">
+              <img src="Images/Spooky_Blue.png">
+            </div>
+            <div id="o5">
+              <img src="Images/Spooky_Orange.png">
+            </div>
+            <div id="o6">
+              <img src="Images/Spooky_Orange.png">
+            </div>
+            <div id="o7">
+              <img src="Images/Spooky_Orange.png">
+            </div>
+            <div id="o8">
+              <img src="Images/Spooky_Orange.png">
+            </div>
+            <div id="o9">
+              <img src="Images/Spooky_Orange.png">
+            </div>
+            <div id="o10">
+              <img src="Images/Spooky_Red.png">
+            </div>
+            <div id="o11">
+              <img src="Images/Spooky_Red.png">
+            </div>
+            <div id="o12">
+              <img src="Images/Spooky_Red.png">
+            </div>
+            <div id="o13">
+              <img src="Images/Spooky_Red.png">
+            </div>
+            <div id="o14">
+              <img src="Images/Spooky_Red.png">
+            </div>
+            <div id="o15">
+              <img src="Images/Spooky_Pink.png">
+            </div>
+            <div id="o16">
+              <img src="Images/Spooky_Pink.png">
+            </div>
+            <div id="o17">
+              <img src="Images/Spooky_Pink.png">
+            </div>
+            <div id="o18">
+              <img src="Images/Spooky_Pink.png">
+            </div>
+            <div id="o19">
+              <img src="Images/Spooky_Pink.png">
+            </div>
+          </div>
+        </div>
+        <div id="CellNumbers">
+          <div id="Horizontal">
+            <p class="HorizontalCellNumber">0</p>
+            <p class="HorizontalCellNumber">1</p>
+            <p class="HorizontalCellNumber">2</p>
+            <p class="HorizontalCellNumber">3</p>
+            <p class="HorizontalCellNumber">4</p>
+            <p class="HorizontalCellNumber">5</p>
+            <p class="HorizontalCellNumber">6</p>
+            <p class="HorizontalCellNumber">7</p>
+            <p class="HorizontalCellNumber">8</p>
+            <p class="HorizontalCellNumber">9</p>
+          </div>
+          <div id="Vertical">
+            <p class="VerticalCellNumber">a</p>
+            <p class="VerticalCellNumber">b</p>
+            <p class="VerticalCellNumber">c</p>
+            <p class="VerticalCellNumber">d</p>
+            <p class="VerticalCellNumber">e</p>
+            <p class="VerticalCellNumber">f</p>
+            <p class="VerticalCellNumber">g</p>
+            <p class="VerticalCellNumber">h</p>
+            <p class="VerticalCellNumber">i</p>
+            <p class="VerticalCellNumber">j</p>
+          </div>
+        </div>
+      </section>
+      <section class="Menu">
+        <section class="Title">
+          <H1>DRAUGHTS</H1>
+          <button id="Rules">GAME RULES</button>
+        </section>
+        <section class="Turn">
+          <H2 class="TurnPlayer">!! YOUR TURN !!</H2>
+          <button id="Rules">END TURN</button>
+        </section>
+        <section class="PlayerStats">
+          <H2>OPPONENT SCORE: <span class="StatCounter ScoreCounter" id="OpponentScore">00</span><img src="Images/PacMan_Dead.png"></H2>
+        </section>
+        <section class="PlayerStats">
+          <H2>YOUR SCORE: <span class="StatCounter ScoreCounter" id="PlayerScore">00</span><img src="Images/Spooky_Dead.png"></H2>
+        </section>
+        <section class="TimeStats">
+          <H2>TIME ELAPSED: <span class="StatCounter" id="Time">0:00:00</span></H2>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

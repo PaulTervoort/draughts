@@ -1,0 +1,36 @@
+button {
+    font-family: pacfont;
+    color: orange;
+}
+
+.Menu {
+    font-family: pacfont;
+    font-size: 20;
+}
+
+.Title {
+    color: pink;
+}
+
+.TurnPlayer {
+    color: greenyellow;
+}
+
+.TurnOpponent {
+    color: red;
+}
+
+.PlayerStats {
+    color: yellow;
+}
+
+.TimeStats {
+    color: aqua;
+}
+.StatCounter {
+    font-family: 'Segoe UI';
+    font-weight: bold;
+}
+.ScoreCounter {
+    color: lightgray;
+}

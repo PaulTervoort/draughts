@@ -1,0 +1,9 @@
+@font-face 
+{
+    font-family: 'pacfont';
+    src: url('pac_font.woff') format('truetype'),
+         url('pac_font.woff') format('woff'),
+         url('pac_font.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
