@@ -27,10 +27,92 @@ button {
 .TimeStats {
     color: aqua;
 }
+
 .StatCounter {
     font-family: 'Segoe UI';
     font-weight: bold;
 }
+
 .ScoreCounter {
     color: lightgray;
+}
+
+.Board {
+    width: 90vh;
+    height: 90vh;
+    max-width: 49.5vw;
+    max-height: 49.5vw;
+    
+    position: relative;
+    float: left;
+    top: 0%;
+    left: 0%;
+}
+
+.BoardSpace {
+    background-image: url("../Images/Background_Board.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+
+    width: 90%;
+    height: 90%;
+
+    position: relative;
+    float: right;
+    top: 0%;
+    left: 0%;
+}
+
+.HorizontalNumbering {
+    font-family: 'Segoe UI';
+    font-weight: bold;
+    color: royalblue;
+
+    width: 9%;
+    height: 90%;
+
+    position: relative;
+    float: right;
+    top: 0%;
+    right: 0%;
+}
+
+.HorizontalCellNumber {
+    vertical-align: middle;
+
+    position: relative;
+    float: left;
+
+    height: 10%;
+    width: 100%;
+}
+
+.VerticalNumbering {
+    font-family: 'Segoe UI';
+    font-weight: bold;
+    color: royalblue;
+
+    width: 90%;
+    height: 9%;
+
+    position: relative;
+    float: right;
+    top: 0%;
+    right: 0%;
+}
+
+.Menu {
+    background-image: url("../Images/Background_Menu.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+
+    width: 40%;
+    height: 90%;
+
+    position: relative;
+    float: right;
+    top: 0px;
+    right: 0px;
 }
