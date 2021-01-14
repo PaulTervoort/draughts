@@ -1,1 +1,1 @@
-node app 6969
+npm start
