@@ -87,7 +87,7 @@ main {
     left: 0;
 }
 
-.Board {
+#Board {
     background-image: url("../Images/Background_Board.png");
     background-size: 100% 100%;
 
@@ -100,7 +100,7 @@ main {
     right: 0;
 }
 
-.PlaySpace {
+#PlaySpace {
     width: 96%;
     height: 96%;
     
@@ -124,23 +124,23 @@ main {
     top: 0;
     right: 0;
 }
-.VerticalNumbering {
+#VerticalNumbering {
     width: 9%;
     height: 90%;
 }
-.HorizontalNumbering {
+#HorizontalNumbering {
     width: 90%;
     height: 9%;
 }
 
-.VerticalNumberOffset {
+#VerticalNumberOffset {
     height: 96%; 
     width: 100%; 
     
     position: absolute;
     top: 2%;
 }
-.HorizontalNumberOffset {
+#HorizontalNumberOffset {
     height:100%; 
     width:96%; 
 
@@ -191,7 +191,7 @@ aside {
     height: 50%;
 }
 
-.Title {
+#Title {
     color: pink;
 
     background-image: url("../Images/Section_Title.png");
@@ -200,7 +200,7 @@ aside {
     height: 28%;
 }
 
-.Turn {
+#Turn {
     background-image: url("../Images/Section_Turn.png");
 
     top: 31%;
@@ -220,17 +220,17 @@ aside {
 
     display: table;
 }
-.OpponentStats {
+#OpponentStats {
     color: yellow;
 
     top: 58%;
 }
-.PlayerStats {
+#PlayerStats {
     color: yellow;
 
     top: 73%;
 }
-.TimeStats {
+#TimeStats {
     color: aqua;
 
     top: 88%;

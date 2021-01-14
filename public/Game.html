@@ -12,8 +12,8 @@
 
   <body>
     <main>
-      <section class="Board">
-        <div class="PlaySpace">
+      <section id="Board">
+        <div id="PlaySpace">
           <div id="Allies">
             <img class="BoardPiece" src="Images/PacMan_Yellow.png" style="left:0%; top: 90%;" id="p0">
             <img class="BoardPiece" src="Images/PacMan_Yellow.png" style="left:20%; top: 90%;" id="p1">
@@ -62,8 +62,8 @@
         </div>
       </section>
 
-      <section class="BoardNumbering VerticalNumbering">
-        <div class="VerticalNumberOffset">
+      <section class="BoardNumbering" id="VerticalNumbering">
+        <div id="VerticalNumberOffset">
           <div class="CellNumber VerticalNumber"><p>0</p></div>
           <div class="CellNumber VerticalNumber"><p>1</p></div>
           <div class="CellNumber VerticalNumber"><p>2</p></div>
@@ -77,8 +77,8 @@
         </div>
       </section>
 
-      <section class="BoardNumbering HorizontalNumbering">
-        <div class="HorizontalNumberOffset">
+      <section class="BoardNumbering" id="HorizontalNumbering">
+        <div id="HorizontalNumberOffset">
           <p class="CellNumber HorizontalNumber">a</p>
           <p class="CellNumber HorizontalNumber">b</p>
           <p class="CellNumber HorizontalNumber">c</p>
@@ -95,7 +95,7 @@
 
 
     <aside>
-      <section class="MenuItem Title">
+      <section class="MenuItem" id="Title">
         <div class="CenterText">
           <H1>DRAUGHTS</H1>
         </div>
@@ -104,16 +104,16 @@
         </button>
       </section>
 
-      <section class="MenuItem Turn">
+      <section class="MenuItem" id="Turn">
         <div class="CenterText">
-          <H2 class="TurnPlayer">!! YOUR TURN !!</H2>
+          <H2 class="TurnPlayer" id="TurnText">!! YOUR TURN !!</H2>
         </div>
         <button id="EndTurnButton">
           <span class="ButtonText">END TURN</span>
         </button>
       </section>
 
-      <section class="MenuItem Stats OpponentStats">
+      <section class="MenuItem Stats" id="OpponentStats">
         <H2>
           OPPONENT SCORE: 
           <span class="StatCounter ScoreCounter" id="OpponentScore">00</span>
@@ -121,7 +121,7 @@
         </H2>
       </section>
 
-      <section class="MenuItem Stats PlayerStats">
+      <section class="MenuItem Stats" id="PlayerStats">
         <H2>
           YOUR SCORE: 
           <span class="StatCounter ScoreCounter" id="PlayerScore">00</span>
@@ -129,7 +129,7 @@
         </H2>
       </section>
 
-      <section class="MenuItem Stats TimeStats">
+      <section class="MenuItem Stats" id="TimeStats">
         <H2>
           TIME ELAPSED: 
           <span class="StatCounter" id="Time">0:00:00</span>
