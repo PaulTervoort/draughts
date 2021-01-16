@@ -1,8 +1,5 @@
 body {
-    background-image: url("../Images/background_splash.png");
-
-
-    background-position: center bottom;
+    background: url("../Images/background_splash.png") no-repeat center center fixed;
     background-size: cover;
     background-color: transparent;
 
