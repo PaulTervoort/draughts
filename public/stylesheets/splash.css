@@ -8,7 +8,7 @@ body {
     background-image: url("../Images/title.png");
 }
 
-button.play {
+button {
     outline: none;
     border: none;
     background-color: transparent;
@@ -28,7 +28,7 @@ button.play {
     margin: 0;
 }
 
-button.play:hover {
+button:hover {
     background-image: url("../Images/start_hover.png");
     cursor: pointer;
 }
