@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/Fonts/Pac_Font/Pac_Font.css" type="text/css" charset="utf-8" />
     <link rel="stylesheet" href="/Stylesheets/Style.css">
     <link rel="stylesheet" href="/Stylesheets/Game.css">
+    <script src="/Javascript/game.js"></script> 
   </head>
 
   <body>
@@ -145,6 +146,7 @@
           <h1 class="WinPopUp" style="display: none;">YOU WON!</h1>
           <h1 class="LosePopUp" style="display: none;">YOU LOST!</h1>
           <h1 class="DrawPopUp" style="display: none;">DRAW!</h1>
+          <h1 class="DropOutPopUp" style="display: none;">OPPONENT LEFT!</h1>
           <h1 class="ConnectionPopUp" style="display: none;">CONNECTION LOST!</h1>
         </section>
         <section id="PopUpText">
@@ -152,6 +154,7 @@
           <p class="WinPopUp" style="display: none;">Congratulations! You defeated your opponent.</p>
           <p class="LosePopUp" style="display: none;">Better luck next time! Maybe you can try again?</p>
           <p class="DrawPopUp" style="display: none;">A player got stuck! Therefore, the winner cannot be determined.</p>
+          <p class="DropOutPopUp" style="display: none;">Unfortunately, this game has come to an end. You can start a new game if you want to.</p>
           <p class="ConnectionPopUp" style="display: none;">Unfortunately, the broken connection caused this game to end.<br>You can try to reconnect to the internet and start a new game.</p>
           <ul class="RulesPopUp" style="display: none;">
             <li>The object of the game is to destroy all pieces of the opponent.</li>
@@ -170,7 +173,7 @@
           <button class="RulesPopUp" id="ClosePopUpButton" style="display: none;">
             <span class="ButtonText">CLOSE</span>
           </button>
-          <button class="WinPopUp LosePopUp DrawPopUp ConnectionPopUp" id="HomePageButton" style="display: none;">
+          <button class="WinPopUp LosePopUp DrawPopUp DropOutPopUp ConnectionPopUp" id="HomePageButton" style="display: none;">
             <span class="ButtonText">RETURN TO HOME</span>
           </button>
         </section>
