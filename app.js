@@ -49,6 +49,24 @@ wss.on("connection", function (ws)
     }
   }
 
+  ws.on("message", function (message) 
+  {
+    let currentGame = games[ws.gameID];
+    if(currentGame != null)
+    {
+      currentGame.players[(this.playerID + 1) % 2].send(message);
+
+      if(message.startsWith("EndGame:"))
+      {
+        currentGame.players[0].close(1000);
+        currentGame.players[1].close(1000);
+
+        finishedGames++;
+        delete games[ws.gameID];
+      }
+    }
+  });
+  
   ws.on("close", function(code) 
   {
     if(gameQueue != null && gameQueue.id == this.gameID)
