@@ -2,6 +2,7 @@ var express = require("express");
 var http = require("http");
 const websocket = require("ws");
 
+// var stats = require('./controllers/app_splash');
 
 var port = process.argv[2];
 var app = express();
@@ -15,12 +16,14 @@ app.get("/play", function(req, res)
   res.sendFile("game.html", { root: "./public" });
 });
 
+app.get("/getStats", function(req, res) {
+  getStats(req, res);
+})
+
 app.use(express.static(__dirname + "/public"));
 const server = http.createServer(app);
 
-
 const wss = new websocket.Server({ server });
-
 wss.on("connection", function (ws) 
 {
   ws.gameID = startedGames;
@@ -89,7 +92,6 @@ wss.on("connection", function (ws)
 
 server.listen(port);
 
-
 var gameQueue = null;
 var games = {};
 var startedGames = 0;
@@ -102,3 +104,17 @@ var game = function(gameID)
   this.turn = 0;
   if(Math.random() > 0.5) { this.turn = 1; }
 };
+
+
+var getStats = function(req, res) {
+  var runningGames = Object.keys(games).length;
+  var playerCount = (gameQueue == null?0:1) + runningGames*2;
+
+  var gameStats = {
+    runningGames: runningGames,
+    finishedGames: finishedGames,
+    playerCount: playerCount
+  }
+
+  res.send(gameStats);
+}

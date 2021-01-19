@@ -6,15 +6,16 @@
     <link rel="stylesheet" href="Fonts/Pac_Font/Pac_Font.css" type="text/css" charset="utf-8" />
     <link rel="stylesheet" href="Stylesheets/Style.css">
     <link rel="stylesheet" href="Stylesheets/Splash.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js" type="text/javascript"></script>
     <script src="/Javascript/splash.js"></script> 
 </head>
 <body>
     <div class="title"></div>
     <button id="play"></button>
     <div class="box" id="stats">
-        <span>0 players online right now</span><br>
-        <span>0 games are being played right now</span><br>
-        <span>0 games have been played</span>
+        <span><span id="statPlayerCount">n/a</span> players online right now</span><br>
+        <span><span id="statPlayingCount">n/a</span> games are being played right now</span><br>
+        <span><span id="statPlayedCount">n/a</span> games have been played</span>
     </div>
     <div class="box" id="rules">Rules</div>
 </body>
