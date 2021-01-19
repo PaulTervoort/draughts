@@ -27,7 +27,7 @@ function game()
     };
 
 
-    const socket = new WebSocket("ws://localhost:6969");
+    const socket = new WebSocket("ws://" + window.location.hostname + ":6969");
 
     socket.onmessage = async function(event)
     {
@@ -62,8 +62,17 @@ function game()
         else if(message.startsWith("Move:"))
         {
             await board.executeOpponentMoveString(message.slice(5));
-            board.enable();
-            enableTurn();
+
+            if(board.hasOpponentWon())
+            {
+                socket.send("EndGame:Win");
+                messagePopUp.endGamePopUp("Lose");
+            }
+            else
+            {
+                board.enable();
+                enableTurn();
+            }
         }
     };
 
@@ -98,6 +107,8 @@ function gameBoard()
     const board = new boardInterface();
 
     this.hasValidTurn = function() { return board.isValidMove(); }
+
+    this.hasOpponentWon = function() { return board.getOpponentScore() >= 20; }
 
     this.getTurnString = function(){ return board.turnString(); }
 
@@ -234,6 +245,7 @@ function gameBoard()
         this.collection = [];
         this.importance = 0;
 
+
         this.checkMoveNormal = function(xPositive)
         {
             let xDir = xPositive?1:-1;
@@ -256,13 +268,13 @@ function gameBoard()
             if(x > 0-xDir && x < 9-xDir && y > 0-yDir && y < 9-yDir && board.boardMatrix[y+yDir][x+xDir] != null)
             {
                 let killID = board.boardMatrix[y+yDir][x+xDir];
-                let xNew = x+2*xDir;
-                let yNew = y+2*yDir;
+                let xMove = x+2*xDir;
+                let yMove = y+2*yDir;
 
-                if(!removed.includes(killID) && killID.startsWith("o") && board.boardMatrix[yNew][xNew] == null)
+                if(!removed.includes(killID) && killID.startsWith("o") && board.boardMatrix[yMove][xMove] == null)
                 {
                     removed.push(killID);
-                    let nextMove = new validMovesCollection(piece, xNew, yNew, removed);
+                    let nextMove = new validMovesCollection(piece, xMove, yMove, removed);
                     let thisMoveImportance = nextMove.importance + 1;
                     if(thisMoveImportance <= 2)
                     {
@@ -278,7 +290,96 @@ function gameBoard()
                             this.importance = thisMoveImportance;
                         }
 
-                        this.collection.push(new move(piece.id, xNew, yNew, killID, nextMove))
+                        this.collection.push(new move(piece.id, xMove, yMove, killID, nextMove))
+                    }
+                }
+            }
+        }
+
+        this.checkMoveKing = function(xPositive, yPositive)
+        {
+            let xDir = xPositive?1:-1;
+            let yDir = yPositive?1:-1;
+
+            let emptySpace = true;
+            let range = 1;
+            while(emptySpace)
+            {
+                let xMove = x + range * xDir;
+                let yMove = y + range * yDir;
+    
+                emptySpace = xMove >= 0 && xMove <= 9 && yMove >= 0 && yMove <= 9 && board.boardMatrix[yMove][xMove] == null;
+                if(emptySpace)
+                {
+                    if(this.importance <= 1)
+                    {
+                        this.importance = 1;
+                        this.collection.push(new move(piece.id, xMove, yMove, null, null))
+                    }
+                }
+
+                range++;
+            }
+        }
+
+        this.checkKillKing = function(xPositive, yPositive)
+        {
+            let xDir = xPositive?1:-1;
+            let yDir = yPositive?1:-1;
+
+            let searchNext = true;
+            let range = 1;
+            while(searchNext)
+            {
+                let xMove = x + range * xDir;
+                let yMove = y + range * yDir;
+
+                range++;
+
+                searchNext = xMove >= 0 && xMove <= 9 && yMove >= 0 && yMove <= 9;
+                if(searchNext && board.boardMatrix[yMove][xMove] != null)
+                {
+                    searchNext = false;
+
+                    let killID = board.boardMatrix[yMove][xMove];
+
+                    xMove = xMove + xDir;
+                    yMove = yMove + yDir;
+                    let emptySpace = xMove >= 0 && xMove <= 9 && yMove >= 0 && yMove <= 9 && board.boardMatrix[yMove][xMove] == null;
+                    if(!removed.includes(killID) && killID.startsWith("o") && emptySpace)
+                    {
+                        removed.push(killID);
+
+                        while(emptySpace)
+                        {
+                            xMove = x + range * xDir;
+                            yMove = y + range * yDir;
+                
+                            emptySpace = xMove >= 0 && xMove <= 9 && yMove >= 0 && yMove <= 9 && board.boardMatrix[yMove][xMove] == null;
+                            if(emptySpace)
+                            {
+                                let nextMove = new validMovesCollection(piece, xMove, yMove, removed);
+                                let thisMoveImportance = nextMove.importance + 1;
+                                if(thisMoveImportance <= 2)
+                                {
+                                    thisMoveImportance = 2;
+                                    nextMove = null;
+                                }
+            
+                                if(this.importance <= thisMoveImportance)
+                                {
+                                    if(this.importance < thisMoveImportance)
+                                    {
+                                        this.collection = [];
+                                        this.importance = thisMoveImportance;
+                                    }
+            
+                                    this.collection.push(new move(piece.id, xMove, yMove, killID, nextMove))
+                                }
+                            }
+            
+                            range++;
+                        }
                     }
                 }
             }
@@ -287,7 +388,18 @@ function gameBoard()
 
         if(piece.king)
         {
+            if(removed.length == 0)
+            {
+                this.checkMoveKing(false, false);
+                this.checkMoveKing(false, true);
+                this.checkMoveKing(true, false);
+                this.checkMoveKing(true, true);
+            }
 
+            this.checkKillKing(false, false);
+            this.checkKillKing(false, true);
+            this.checkKillKing(true, false);
+            this.checkKillKing(true, true);
         }
         else
         {
@@ -372,6 +484,8 @@ function gameBoard()
         const playerScoreDisplay = document.getElementById("PlayerScore");
         var opponentScore = 0;
         const opponentScoreDisplay = document.getElementById("OpponentScore");
+
+        this.getOpponentScore = function() { return opponentScore; }
 
 
         this.allies = {};
@@ -485,7 +599,7 @@ function gameBoard()
             {
                 validMove = true;
 
-                if(piece.y == 0 && !piece.king) 
+                if(dot.yPos == 0 && !piece.king) 
                 {
                     piece.king = true; 
                     piece.newKing = true;
@@ -616,6 +730,18 @@ function popUp()
             else if(message == "ConnectionLost")
             {
                 for (let element of popUpDropOut) { element.style.display = "inherit"; }
+            }
+            else if(message == "Lose")
+            {
+                for (let element of popUpLose) { element.style.display = "inherit"; }
+            }
+            else if(message == "Win")
+            {
+                for (let element of popUpWin) { element.style.display = "inherit"; }
+            }
+            else if(message == "Draw")
+            {
+                for (let element of popUpDraw) { element.style.display = "inherit"; }
             }
             else
             {
