@@ -1,7 +1,3 @@
-html {
-  display: table;
-}
-
 body {
   background-color: black;
   text-align: center;
@@ -15,4 +11,18 @@ body {
   transform: translate(-50%, -50%);
 
   font-size: min(5vh, 2.81vw);
+}
+
+.box {
+  position: absolute;
+
+  background-color: #FBED28;
+  background-clip: padding-box;
+  border: .3rem black solid;
+  box-sizing: border-box;
+  padding: 1%;
+
+  font-family: Courier New;
+  font-size: 70%;
+  font-weight: bold;
 }

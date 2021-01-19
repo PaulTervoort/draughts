@@ -56,8 +56,9 @@ button {
     height: 45%;
 }
 
-button:hover {
-    background-image: url("/Images/button_hover.png");
+button:enabled:hover {
+    background-image: url("/Images/button_hover.png");    
+    cursor:pointer;
 }
 
 button:enabled:active {
@@ -288,7 +289,7 @@ aside {
     font-family: 'Segoe UI';
     font-weight: bold;
 
-    font-size: 50%;
+    font-size: 47%;
     line-height: 110%;
 }
 

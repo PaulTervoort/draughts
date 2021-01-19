@@ -1,11 +1,22 @@
-body {
-    background: url("../Images/background_splash.png") no-repeat center center fixed;
-    background-size: cover;
-    background-color: transparent;
+main {
+    background-image: url("/Images/Background_Splash.png");
+    background-size: 100% 100%;
 
+    width: 100%;
+    height: 100%;
 }
+
 .title {
-    background-image: url("../Images/title.png");
+    background-image: url("/Images/Title.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    position: absolute;
+    left:10%;
+    top:5%;
+
+    width: 80%;
+    height: 25%;
 }
 
 button {
@@ -13,60 +24,53 @@ button {
     border: none;
     background-color: transparent;
 
-    background-image: url("../Images/start.png");
+    background-image: url("/Images/Start.png");
     background-repeat: no-repeat;
     background-position: center bottom;
     background-size: contain;
 
     position: absolute;
+    left: 35%;
     top: 30%;
-    bottom: 30%;
-    left: 37%;
-    right: 33%;
-    width: 33%;
+
+    width: 30%;
+    height: 40%;
 
     margin: 0;
 }
-
 button:hover {
-    background-image: url("../Images/start_hover.png");
+    background-image: url("/Images/Start_Hover.png");
     cursor: pointer;
 }
 
-.box {
-    position:absolute;
-    background-color:#FBED28;
-    border: 10px black solid;
-    padding:1%;
-    font-family: Courier New;
-    font-size: 70%;
-    font-weight: bold;
-}
-
-.title {
-    background-image: url("../Images/title.png");
-    position: absolute;
-    width: 100%;
-    height: 50%;
-    left:21%;
-
-    background-repeat: no-repeat;
-}
-
 #stats {
-    bottom:0;
-    left:25%;
-    right:25%;
-    width:50%;
+    left:24%;
+    bottom:2%;
+
+    width:52%;
+}
+#statPlayerCount::after {
+    content: " players online right now";
+}
+#statPlayingCount::after {
+    content: " games are being played right now";
+}
+#statPlayedCount::after {
+    content: " games have been played";
 }
 
 #rules {
-    right: 0;
-    margin: 0;
-    bottom: 0;
-}
+    background-image: url("/Images/Button_Rules.png");
+    background-size: 100% 100%;
 
+    margin: 0;
+
+    right: 1%;
+    bottom: 2%;
+}
 #rules:hover {
-    background-color: #FFCA08;
+    background-image: url("/Images/Button_Rules_Hover.png");
+    background-size: 100% 100%;
+
     cursor:pointer;
 }
