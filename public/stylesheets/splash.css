@@ -1,6 +1,6 @@
-main {
-    background-image: url("/Images/Background_Splash.png");
-    background-size: 100% 100%;
+body {
+    background: url("/Images/background_splash.png") center center fixed;
+    /* background-size: 100% 100%; */
 
     width: 100%;
     height: 100%;
@@ -16,7 +16,7 @@ main {
     top:5%;
 
     width: 80%;
-    height: 25%;
+    height: 20%;
 }
 
 button {
@@ -67,13 +67,7 @@ button:hover {
     font-weight: bold;
 }
 
-.title {
-    background-image: url("../Images/title.png");
-    position: absolute;
-    width: 100%;
-    height: 50%;
-    left:21%;
-    background-repeat: no-repeat;
+
 #stats {
     left:24%;
     bottom:2%;
@@ -123,8 +117,4 @@ button:hover {
 
 #close:hover {
     background-color: #FFCA08;
-}
-
-span.spanStats::after {
-    content: url("/Images/spooky_orange_small.png");
 }

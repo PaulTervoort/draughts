@@ -39,30 +39,3 @@ function getStats ()
         });
 }
 
-function popUpRules() {
-    var x = document.getElementById("rulesPopUpSplash");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-    } else {
-      x.style.display = "none";
-    }
-  }
-    axios.get('/getStats').then( function(res)
-    {
-        //success
-        console.log(res.status);
-        console.log(res.data);
-        
-        let playerCount = res.data.playerCount; 
-        let spanPlayerCount = document.getElementById('statPlayerCount'); 
-        spanPlayerCount.innerText = playerCount; 
-        
-        document.getElementById('statPlayingCount').innerText= res.data.runningGames;
-        document.getElementById('statPlayedCount').innerText= res.data.finishedGames;            
-    })
-    .catch(function(err)
-    {
-        //error
-        console.log(err);
-    });
-}
