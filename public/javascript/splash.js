@@ -33,5 +33,13 @@ function getStats ()
             //error
             console.log(err);
         });
-
 }
+
+function popUpRules() {
+    var x = document.getElementById("rulesPopUpSplash");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }

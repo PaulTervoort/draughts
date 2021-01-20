@@ -31,6 +31,20 @@ button {
 button:hover {
     background-image: url("../Images/start_hover.png");
     cursor: pointer;
+    animation: playAnimation 5s infinite linear;
+}
+
+@keyframes playAnimation {
+    0%   {transform: rotate(0deg)}
+    25% {transform: rotate(90deg);}
+    50% {transform: rotate(180deg);}
+    75% {transform: rotate(270deg);}
+    100% {transform: rotate(360deg);}
+
+    /* 25%  {background-color:yellow; left:200px; top:0px;}
+    50%  {background-color:blue; left:200px; top:200px;}
+    75%  {background-color:green; left:0px; top:200px;}
+    100% {background-color:red; left:0px; top:0px;} */
 }
 
 .box {
@@ -49,7 +63,6 @@ button:hover {
     width: 100%;
     height: 50%;
     left:21%;
-
     background-repeat: no-repeat;
 }
 
@@ -69,4 +82,27 @@ button:hover {
 #rules:hover {
     background-color: #FFCA08;
     cursor:pointer;
+}
+
+#rulesPopUpSplash {
+    background-color: #676767;
+    z-index: 500;
+    overflow:  scroll;
+    position: relative;
+    height: 80%;
+    top: 10%;
+}
+
+#close {
+    width: 20%;
+    left:40%;
+    cursor: pointer;
+}
+
+#close:hover {
+    background-color: #FFCA08;
+}
+
+span.spanStats::after {
+    content: url("/Images/spooky_orange_small.png");
 }
