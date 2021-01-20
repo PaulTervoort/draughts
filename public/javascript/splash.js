@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function()
 
 function getStats ()
 {
-<<<<<<< HEAD
     fetch('/getStats').then(res => res.json()).then( function(res)
     {
         //success
@@ -30,28 +29,3 @@ function getStats ()
         console.log(err);
     });
 }
-=======
-    console.log("getStats");
-
-    axios.get('/getStats')
-        .then( function(res){
-            //success
-            console.log(res.status);
-            console.log(res.data);
-            
-            let playerCount = res.data.playerCount; 
-            let spanPlayerCount = document.getElementById('statPlayerCount'); 
-            spanPlayerCount.innerText = playerCount; 
-            
-            document.getElementById('statPlayingCount').innerText= res.data.runningGames;
-            document.getElementById('statPlayedCount').innerText= res.data.finishedGames;
-            
-            
-        })
-        .catch(function(err){
-            //error
-            console.log(err);
-        });
-}
-
->>>>>>> 20f2b9b8a1e98270dcb163f48383cbd6aee5fde4

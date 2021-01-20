@@ -1,6 +1,6 @@
-body {
-    background: url("/Images/background_splash.png") center center fixed;
-    /* background-size: 100% 100%; */
+main {
+    background-image: url("/Images/Background_Splash.png");
+    background-size: 100% 100%;
 
     width: 100%;
     height: 100%;
@@ -19,7 +19,16 @@ body {
     height: 20%;
 }
 
-button {
+#playContainer {
+    position: absolute;
+    left: 38%;
+    top: 30%;
+
+    width: 24%;
+    height: 40%;
+}
+
+#play {
     outline: none;
     border: none;
     background-color: transparent;
@@ -29,42 +38,23 @@ button {
     background-position: center bottom;
     background-size: contain;
 
-    position: absolute;
-    left: 35%;
-    top: 30%;
-
-    width: 30%;
-    height: 40%;
+    width: 100%;
+    height: 100%;
 
     margin: 0;
 }
-button:hover {
+#playContainer:hover > #play {
     background-image: url("/Images/Start_Hover.png");
     cursor: pointer;
     animation: playAnimation 5s infinite linear;
 }
 
 @keyframes playAnimation {
-    0%   {transform: rotate(0deg)}
+    0%   {transform: rotate(0deg);}
     25% {transform: rotate(90deg);}
     50% {transform: rotate(180deg);}
     75% {transform: rotate(270deg);}
     100% {transform: rotate(360deg);}
-
-    /* 25%  {background-color:yellow; left:200px; top:0px;}
-    50%  {background-color:blue; left:200px; top:200px;}
-    75%  {background-color:green; left:0px; top:200px;}
-    100% {background-color:red; left:0px; top:0px;} */
-}
-
-.box {
-    position:absolute;
-    background-color:#FBED28;
-    border: 10px black solid;
-    padding:1%;
-    font-family: Courier New;
-    font-size: 70%;
-    font-weight: bold;
 }
 
 
@@ -98,23 +88,4 @@ button:hover {
     background-size: 100% 100%;
 
     cursor:pointer;
-}
-
-#rulesPopUpSplash {
-    background-color: #676767;
-    z-index: 500;
-    overflow:  scroll;
-    position: relative;
-    height: 80%;
-    top: 10%;
-}
-
-#close {
-    width: 20%;
-    left:40%;
-    cursor: pointer;
-}
-
-#close:hover {
-    background-color: #FFCA08;
 }

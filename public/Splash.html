@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
     <head>
         <meta charset="UTF-8">
         <link rel="icon" href="/Images/Icon.png">
@@ -13,7 +12,9 @@
     <body>
         <main>
             <div class="title"></div>
-            <button class="ButtonSound" id="play"></button>
+            <div class="ButtonSound" id="playContainer">
+                <button id="play"></button>
+            </div>
             <div class="box" id="stats">
                 <span id="statPlayerCount">n/a</span><br>
                 <span id="statPlayingCount">n/a</span><br>
@@ -22,41 +23,4 @@
             <div class="box ButtonSound" id="rules">Rules</div>
         </main>
     </body>
-=======
-<head>
-    <meta charset="UTF-8">
-    <title>Draughts</title>
-    <link rel="icon" href="/Images/Icon.png">
-    <link rel="stylesheet" href="Fonts/Pac_Font/Pac_Font.css" type="text/css" charset="utf-8" />
-    <link rel="stylesheet" href="Stylesheets/Style.css">
-    <link rel="stylesheet" href="Stylesheets/Splash.css">
-    <script src="https://unpkg.com/axios/dist/axios.min.js" type="text/javascript"></script>
-    <script src="/Javascript/splash.js"></script> 
-</head>
-<body>
-    <div class="title"></div>
-    <button id="play"></button>
-    <div class="box" id = "rulesPopUpSplash" style="display: none;">
-        <ul>
-            <li>The object of the game is to destroy all pieces of the opponent.</li>
-            <li>There are two players and the game begins with 20 pieces each,<br>both players having a different shape.</li>
-            <li>The players then begin playing, making one move at a time.</li>
-            <li>Players can never jump over their own piece.</li>
-            <li>A single piece can only move one step in a forward diagonal direction if the spot is empty.</li>
-            <li>If an opponent's piece is adjacent to a player's piece, the player's piece can jump over it which destroys the opponents piece, even if the piece has to move backward tot do this. This is only allowed if there is an empty spot after the destroyed piece, and this action can be performed multiple times in one turn if the same piece is used. It is mandatory to destroy an opponent's piece if it is possible, where the route with the most possible kills must be taken.</li>
-            <li>When a player's piece makes their way all the way across the board to the opponent's side, their piece will be turned into a King. A King is able to move both forward and backward, instead of just forward, and instead of just one step, it can move multiple steps in a single direction. If a King can destroy pieces of the opponent from any distance, but it can never jump over two or more pieces that lie directly after each other.</li>
-            <li>The game will come to an end once a player does not have any pieces left.</li>
-            <li>If a player can't move any of his pieces, the game will end in a draw.</li>
-            <!-- Source: draughts.org -->
-        </ul>
-        <div class = "box" id="close" onclick="popUpRules()">Close</div>
-    </div>  
-    <div class="box" id="stats">
-        <span><span id="statPlayerCount">n/a</span></span><br>
-        <span><span id="statPlayingCount">n/a</span></span><br>
-        <span><span id="statPlayedCount">n/a</span></span>
-    </div>
-    <div class="box" id="rules">Rules</div>
-</body>
->>>>>>> 20f2b9b8a1e98270dcb163f48383cbd6aee5fde4
 </html>
