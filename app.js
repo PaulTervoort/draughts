@@ -1,33 +1,55 @@
+// Require
 var express = require("express");
 var http = require("http");
 const websocket = require("ws");
+const fs = require("fs");
 
-// var stats = require('./controllers/app_splash');
 
+// Load text containing the rules of the game
+var rulesHTML = "";
+fs.readFile("./views/rules_text.html", 'utf8', function(err, data) 
+{
+  if (err) throw err;
+  rulesHTML = data;
+});
+
+
+// Set app
 var port = process.argv[2];
 var app = express();
 
+
+// Routes and views
+app.set('view engine', 'ejs')
 app.get("/", function(req, res) 
 {
   res.sendFile("splash.html", { root: "./public" });
 });
 app.get("/play", function(req, res) 
 {
-  res.sendFile("game.html", { root: "./public" });
+  res.render("game.ejs", { rulesText : rulesHTML});
 });
+app.get("/rules", function(req, res) 
+{
+  res.render("rules.ejs", { rulesText : rulesHTML});
+});
+app.use(express.static(__dirname + "/public"));
+const server = http.createServer(app);
 
 app.get("/getStats", function(req, res) {
   getStats(req, res);
 })
 
-app.use(express.static(__dirname + "/public"));
-const server = http.createServer(app);
 
+
+// Websocket behaviour
 const wss = new websocket.Server({ server });
 wss.on("connection", function (ws) 
 {
+  // Unique game ID
   ws.gameID = startedGames;
 
+  // Queue is empty: create new game
   if(gameQueue == null)
   {
     gameQueue = new game(ws.gameID); 
@@ -35,6 +57,7 @@ wss.on("connection", function (ws)
     ws.playerID = 0;
     gameQueue.players[0] = ws;
   } 
+  // Queue is not empty: join game and start
   else 
   {
     ws.playerID = 1;
@@ -44,6 +67,7 @@ wss.on("connection", function (ws)
     startedGames++;
     gameQueue = null;
 
+    // Start game
     let currentGame = games[ws.gameID];
     if(currentGame != null)
     {
@@ -52,13 +76,17 @@ wss.on("connection", function (ws)
     }
   }
 
+  // Incoming message
   ws.on("message", function (message) 
   {
+    // If this websocket is attached to a game
     let currentGame = games[ws.gameID];
     if(currentGame != null)
     {
+      // Send message to opponent
       currentGame.players[(this.playerID + 1) % 2].send(message);
 
+      // End game
       if(message.startsWith("EndGame:"))
       {
         currentGame.players[0].close(1000);
@@ -70,14 +98,18 @@ wss.on("connection", function (ws)
     }
   });
   
+  // Websocked closed
   ws.on("close", function(code) 
   {
+    // If still in queue, reset queue
     if(gameQueue != null && gameQueue.id == this.gameID)
     {
       gameQueue = null;
     }
+    // If game started, stop and remove game
     else if(code > 1000 && ws.gameID in games)
     {
+      // Inform opponent
       let otherPlayer = games[ws.gameID].players[(this.playerID + 1) % 2];
       if(otherPlayer != null)
       {
@@ -90,13 +122,17 @@ wss.on("connection", function (ws)
   });
 });
 
+// start server
 server.listen(port);
 
+
+// Game data
 var gameQueue = null;
 var games = {};
 var startedGames = 0;
 var finishedGames = 0;
 
+// Game datastructure
 var game = function(gameID) 
 {
   this.id = gameID;

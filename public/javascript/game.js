@@ -1,41 +1,54 @@
+// Start game after the html has been loaded
 document.addEventListener("DOMContentLoaded", (event) => game());
 
+// This function describes the behaviour of the game
 function game()
 {
+    // Initialize the board and popup
     const messagePopUp = new popUp();
     const board = new gameBoard();
 
+    // Get a reference to relevant DOM elements
     const labelTurnPlayer = document.getElementById("TurnPlayer");
     const labelTurnOpponent = document.getElementById("TurnOpponent");
     const timeDisplay = document.getElementById("Time");
-
     const endTurnButton = document.getElementById("EndTurnButton");
 
+    // Action for 'End Turn'-button
     endTurnButton.onclick = function()
     {
+        // Only end the turn if it is valid
         if(board.hasValidTurn())
         {
+            // Sent turn to opponent
             socket.send("Move:" + board.getTurnString());
 
+            // Disable player interaction with board
             disableTurn();
             board.disable();
         }
     };
+    // Action for 'Rules'-button
     document.getElementById("RuleButton").onclick = function()
     {
+        // Show popup with the rules of the game
         messagePopUp.showRulesPopUp();
     };
 
 
+    // Initialize websocket
     const socket = new WebSocket("ws://" + window.location.hostname + ":6969");
 
+    // Websocket receive action
     socket.onmessage = async function(event)
     {
         let message = event.data;
+        // Start the game
         if(message.startsWith("StartGame;"))
         {
-            messagePopUp.startGamePopUp();
+            messagePopUp.hideQueuePopUp();
 
+            // Start the timer
             timeDisplay.start = new Date().getTime();
             setInterval(function() 
             {
@@ -43,48 +56,74 @@ function game()
                 timeDisplay.innerHTML = new Date(ms).toISOString().slice(12, 19);
             }, 1000);
 
+            // Parse the message string to get the player ID and the ID which is on turn at the beginning
             let playerID = parseInt(message.slice(17, 18));
             let turnPlayer = parseInt(message.slice(24, 25));
 
+            // The player starts the game
             if(playerID == turnPlayer)
             {
+                // Enable interaction with the board
                 board.enable();
             }
+            // The opponent starts the game
             else
             {
+                // Disable the 'End Turn'-button
                 disableTurn()
             }
         }
+        // End the game
         else if(message.startsWith("EndGame:"))
         {
+            // Show a popup with the reason why the game has ended
             messagePopUp.endGamePopUp(message.slice(8));
         }
+        // Do a move
         else if(message.startsWith("Move:"))
         {
+            // Perform the moves of the opponent's turn
             await board.executeOpponentMoveString(message.slice(5));
 
+            // If the opponent has won
             if(board.hasOpponentWon())
             {
+                // Send to the oppponent that he has won
                 socket.send("EndGame:Win");
+                // Show a popup that the player has lost
                 messagePopUp.endGamePopUp("Lose");
             }
             else
             {
-                board.enable();
-                enableTurn();
+                // Enable the board for interaction, and check if there are possible moves
+                if(board.enable())
+                {
+                    // Enable the 'End Turn'-button
+                    enableTurn();
+                }
+                else
+                {
+                    // No possible moves for the player, so game ends as a draw
+                    socket.send("EndGame:Draw");
+                    messagePopUp.endGamePopUp("Draw");
+                }
             }
         }
     };
 
+    // Websocket close action
     socket.onclose = function(event)
     {
+        // If close was unintended
         if(event.code > 1001)
         {
+            // Show popup with connection error
             messagePopUp.endGamePopUp("Connection");
         }
     };
 
 
+    // Enable the 'End Turn'-button
     function enableTurn()
     {
         labelTurnPlayer.style.display = "inherit";
@@ -92,6 +131,7 @@ function game()
         endTurnButton.disabled = false;
     }
 
+    // Disable the 'End Turn'-button
     function disableTurn()
     {
         labelTurnPlayer.style.display = "none";
@@ -102,6 +142,7 @@ function game()
 
 
 
+// A class defining the behaviour of the board
 function gameBoard()
 {
     const board = new boardInterface();
@@ -119,8 +160,9 @@ function gameBoard()
         {
             enabled = true;
             board.clearMoves();
-            enableMovablePieces();
+            return enableMovablePieces();
         }
+        return false;
     }
 
     this.disable = function()
@@ -211,6 +253,8 @@ function gameBoard()
                 if(importance > maxImportance) { maxImportance = importance; }   
             }
         }
+        if(maxImportance == 0) { return false; }
+
         for(let i = 0; i < 20; i++)
         {
             let piece = board.allies["a"+i];
@@ -226,6 +270,7 @@ function gameBoard()
                 }
             }
         }
+        return true;
     }
 
     
@@ -672,8 +717,11 @@ function gameBoard()
 }
 
 
+
+// A class defining the behaviour of the popup-window
 function popUp() 
 {
+    // Get references to DOM-elements of the popup-window
     const popUpWindow = document.getElementById("PopUp");
     const popUpWait = document.getElementsByClassName("WaitPopUp");
     const popUpRules = document.getElementsByClassName("RulesPopUp");
@@ -683,32 +731,47 @@ function popUp()
     const popUpDropOut = document.getElementsByClassName("DropOutPopUp");
     const popUpConnection = document.getElementsByClassName("ConnectionPopUp");
 
+    // Action of the 'Close Popup'-button
     document.getElementById("ClosePopUpButton").onclick = function()
     {
+        // Hide the popup window
         popUpWindow.style.display = "none";
+        // Disable the rules text
         disableInfo();
     };
+    // Action of the 'Home'-button
     document.getElementById("HomePageButton").onclick = function()
     {
+        // Redirect to the game homepage
         window.location.replace("/")
     };
 
 
+    // Track info about the game state
     var gameStarted = false;
     var gameFinished = false;
+
+    // Whether the popup-window is open
     var infoOpen = false;
 
-    this.startGamePopUp = function() 
+    // Hide the queue-popup
+    this.hideQueuePopUp = function() 
     {
+        // Hide the popup window
         popUpWindow.style.display = "none";
+        // Disable the queue text
         disableInfo();
 
+        // Queue ended means game started
         gameStarted = true;
     };
 
+    // Show a popup containing the game-rules
     this.showRulesPopUp = function() 
     {
+        // Enable all elements that should be on thit popup
         for (let element of popUpRules) { element.style.display = "inherit"; }
+        // Enable popup window
         popUpWindow.style.display = "inherit";
 
         infoOpen = true;
@@ -716,35 +779,46 @@ function popUp()
 
     this.endGamePopUp = function(message) 
     {
+        // Only show popup if game is not finished yet
         if(!gameFinished)
         {
+            // Disable the rules text if open
             disableInfo();
 
+            // This is an 'end game'-popup, so the game has ended
             gameFinished = true;
+
+            // Enable popup window
             popUpWindow.style.display = "inherit";
 
             if(message == "Connection")
             {
+                // Enable all elements that should be on thit popup
                 for (let element of popUpConnection) { element.style.display = "inherit"; }
             }
             else if(message == "ConnectionLost")
             {
+                // Enable all elements that should be on thit popup
                 for (let element of popUpDropOut) { element.style.display = "inherit"; }
             }
             else if(message == "Lose")
             {
+                // Enable all elements that should be on thit popup
                 for (let element of popUpLose) { element.style.display = "inherit"; }
             }
             else if(message == "Win")
             {
+                // Enable all elements that should be on thit popup
                 for (let element of popUpWin) { element.style.display = "inherit"; }
             }
             else if(message == "Draw")
             {
+                // Enable all elements that should be on thit popup
                 for (let element of popUpDraw) { element.style.display = "inherit"; }
             }
             else
             {
+                // Invalid reason text, so roll back
                 gameFinished = false;
                 popUpWindow.style.display = "none";
             }
@@ -752,6 +826,7 @@ function popUp()
     };
 
 
+    // Disable the rules and queue text if open
     function disableInfo()
     {
         if(!gameStarted) 
