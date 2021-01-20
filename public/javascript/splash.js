@@ -10,24 +10,18 @@ document.addEventListener("DOMContentLoaded", function()
     };
 
     getStats();
-    setInterval(getStats, 5000);
+    setInterval(getStats, 1000);
 });
 
 
 function getStats ()
 {
-    axios.get('/getStats').then( function(res)
+    fetch('/getStats').then(res => res.json()).then( function(res)
     {
         //success
-        console.log(res.status);
-        console.log(res.data);
-        
-        let playerCount = res.data.playerCount; 
-        let spanPlayerCount = document.getElementById('statPlayerCount'); 
-        spanPlayerCount.innerText = playerCount; 
-        
-        document.getElementById('statPlayingCount').innerText= res.data.runningGames;
-        document.getElementById('statPlayedCount').innerText= res.data.finishedGames;            
+        document.getElementById('statPlayerCount').innerText = res.playerCount;
+        document.getElementById('statPlayingCount').innerText= res.runningGames;
+        document.getElementById('statPlayedCount').innerText= res.finishedGames;            
     })
     .catch(function(err)
     {

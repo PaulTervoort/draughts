@@ -145,6 +145,7 @@ function game()
 // A class defining the behaviour of the board
 function gameBoard()
 {
+    // An object which enables intaction with the game elements
     const board = new boardInterface();
 
     this.hasValidTurn = function() { return board.isValidMove(); }
@@ -153,6 +154,7 @@ function gameBoard()
 
     this.getTurnString = function(){ return board.turnString(); }
 
+    // Enables the board
     var enabled = false;
     this.enable = function()
     {
@@ -164,7 +166,7 @@ function gameBoard()
         }
         return false;
     }
-
+    // Disables the board
     this.disable = function()
     {
         if(enabled)
@@ -183,6 +185,7 @@ function gameBoard()
         }
     }
 
+    // Parses the message with the opponent's moves and execute them
     this.executeOpponentMoveString = async function(string)
     {
         let splitString = string.split(":");
@@ -215,12 +218,14 @@ function gameBoard()
             }
         }
 
+        // Wait for 'time' milliseconds
         function delay(time)
         {
             return new Promise(resolve => { setTimeout(() => { resolve(); }, time); });
         }
     }
 
+    // This function is executed when a piece is clicked
     var lastPiece = null;
     function pieceClick(piece)
     {
@@ -241,6 +246,7 @@ function gameBoard()
         }
     }
 
+    // Enables interaction with all pieces that have a possible move
     function enableMovablePieces()
     {
         let maxImportance = 0;
@@ -274,6 +280,7 @@ function gameBoard()
     }
 
     
+    // An object which contains all possible moves of a game piece, which are determined during construction
     function validMovesCollection(piece, xPos, yPos, removed)
     {
         if(removed == null) { removed = []; }
@@ -291,6 +298,7 @@ function gameBoard()
         this.importance = 0;
 
 
+        // Checks if the piece can do a normal step. 'xPositive' determines the direction to check
         this.checkMoveNormal = function(xPositive)
         {
             let xDir = xPositive?1:-1;
@@ -305,6 +313,7 @@ function gameBoard()
             }
         }
 
+        // Checks if the piece can do a killing step. 'xPositive' and'yPositive' determine the direction to check
         this.checkKillNormal = function(xPositive, yPositive)
         {
             let xDir = xPositive?1:-1;
@@ -341,6 +350,7 @@ function gameBoard()
             }
         }
 
+        // Checks if the king-piece can do a normal step and how many. 'xPositive' and'yPositive' determine the direction to check
         this.checkMoveKing = function(xPositive, yPositive)
         {
             let xDir = xPositive?1:-1;
@@ -367,6 +377,7 @@ function gameBoard()
             }
         }
 
+        // Checks if the king-piece can do a killing step. 'xPositive' and'yPositive' determine the direction to check
         this.checkKillKing = function(xPositive, yPositive)
         {
             let xDir = xPositive?1:-1;
@@ -431,6 +442,7 @@ function gameBoard()
         }
 
 
+        // Check all directions depending on the type of piece
         if(piece.king)
         {
             if(removed.length == 0)
@@ -456,17 +468,21 @@ function gameBoard()
             this.checkKillNormal(true, false);
             this.checkKillNormal(true, true);
         }
+
+
+        // This object contains fields which specify a possible move of a piece
+        function move(id, x, y, kill, next)
+        {
+            this.id = id
+            this.x = x;
+            this.y = y;
+            this.kill = kill;
+            this.next = next;
+        }
     }
 
-    function move(id, x, y, kill, next)
-    {
-        this.id = id
-        this.x = x;
-        this.y = y;
-        this.kill = kill;
-        this.next = next;
-    }
 
+    // Set the color of a game piece, if there is a corresponding image
     function setPieceColor(piece, color)
     {
         if(piece.king)
@@ -477,6 +493,8 @@ function gameBoard()
         }
     }
 
+
+    // Undo the move of the last clicked piece
     function resetLastClick()
     {
         if(lastPiece != null) 
@@ -519,12 +537,15 @@ function gameBoard()
 
 
 
+    // An object which enables intaction with the game elements
     function boardInterface()
     {
+        // Get a reference to some important DOM-elements
         const board = document.getElementById("PlaySpace");
         const allyDOM = document.getElementById("Allies").children;
         const opponentDOM = document.getElementById("Opponents").children;
 
+        // Keep track of the scores of both players
         var playerScore = 0;
         const playerScoreDisplay = document.getElementById("PlayerScore");
         var opponentScore = 0;
@@ -533,6 +554,7 @@ function gameBoard()
         this.getOpponentScore = function() { return opponentScore; }
 
 
+        // Collections which hold the state of the board pieces
         this.allies = {};
         this.opponents = {};
         this.boardMatrix = {0:{}, 1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}, 7:{}, 8:{}, 9:{}};
@@ -540,6 +562,7 @@ function gameBoard()
         var validMove = false;
         this.isValidMove = function() { return validMove; }
 
+        // Generate a message string from the list of applied moves
         var moveQueue = [];
         this.turnString = function()
         {
@@ -560,12 +583,14 @@ function gameBoard()
 
             return moveString;
         }
+        // Clear the list of applied moves
         this.clearMoves = function()
         {
             validMove = false;
             moveQueue = [];
         }
 
+        // Kills a piece with ID='pieceID'
         this.killPiece = function(pieceID)
         {
             let killedPiece = null;        
@@ -586,6 +611,7 @@ function gameBoard()
             killedPiece.style.display = "none";
             delete this.boardMatrix[killedPiece.yMatrix][killedPiece.xMatrix];
         }
+        // Undo a kill action
         this.revivePiece = function(pieceID)
         {
             let killedPiece = null;        
@@ -608,6 +634,7 @@ function gameBoard()
         }
 
 
+        // Place a dot on the destination of the move 'currentOption'
         var optionDots = [];
         this.placeOptionDot = function(piece, x, y, currentOption)
         {
@@ -626,6 +653,7 @@ function gameBoard()
             board.appendChild(dot);
             optionDots.push(dot);
         }
+        // The function which is executed if a dot is clicked
         function dotClick(dot, piece, gameBoard)
         {
             gameBoard.removeOptionDots();
@@ -661,6 +689,7 @@ function gameBoard()
             }
         }
     
+        // Remove all dots
         this.removeOptionDots = function()
         {
             for(let i = 0; i < optionDots.length; i++)
@@ -671,6 +700,7 @@ function gameBoard()
         }
 
     
+        // Initialize the allied pieces
         for(let i = 0; i < 20; i++)
         {
             let y = 9 - Math.floor(i / 5);
@@ -681,6 +711,7 @@ function gameBoard()
             piece.possibleTurn = false;
             piece.onclick = () => pieceClick(piece);
         }
+        // Initialize the opponent pieces
         for(let i = 0; i < 20; i++)
         {
             let y = Math.floor(i / 5);
@@ -689,6 +720,7 @@ function gameBoard()
         }
        
     
+        // Initialize a board piece
         function initializePiece(piece, dest, matrix, x, y)
         {
             piece.alive = true;
