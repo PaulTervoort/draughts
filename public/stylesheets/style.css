@@ -18,7 +18,7 @@ body {
 
   background-color: #FBED28;
   background-clip: padding-box;
-  border: .3rem black solid;
+  border: .3em black solid;
   box-sizing: border-box;
   padding: 1%;
 
@@ -28,16 +28,21 @@ body {
 }
 
 #popUpSize {
-  top:10%;
-  left:10%;
-  width:80%;
-  height:80%;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
   display: none;
-  font-size:40px;
+  font-size: 270%;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 550px) {
   #popUpSize {
-    display:block;
+    display: block;
+  }
+}
+@media only screen and (max-height: 300px) {
+  #popUpSize {
+    display: block;
   }
 }

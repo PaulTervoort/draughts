@@ -10,7 +10,10 @@ ul {
     padding-left: 3%;
     padding-right: 2%;
     margin: 0;
+
     text-align: left;
+    font-size: 55%;
+    line-height: 100%;
 }
 
 
@@ -50,7 +53,4 @@ ul {
 
     width:70%;
     height: 55%;
-
-    font-size: 40%;
-    line-height: 100%;
 }
