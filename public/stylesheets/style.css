@@ -26,3 +26,18 @@ body {
   font-size: 70%;
   font-weight: bold;
 }
+
+#popUpSize {
+  top:10%;
+  left:10%;
+  width:80%;
+  height:80%;
+  display: none;
+  font-size:40px;
+}
+
+@media only screen and (max-width: 600px) {
+  #popUpSize {
+    display:block;
+  }
+}
